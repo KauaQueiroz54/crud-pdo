@@ -1,0 +1,39 @@
+<?php
+
+class User{
+    private $pdo;
+
+
+    public function __construct($pdo){
+        $this->pdo = $pdo;
+
+    }
+
+    public function create($name, $email){
+        $sql = "INSERT INTO users(name, email) VALUES (:name, :email)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['name'=> $name, 'email' => $email]);
+    }
+
+    public function read(){
+        $sql = "SELECT * FROM users";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function update($id, $name, $email){
+        $sql = "UPDATE users set name = :name, email = :email where id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $id, 'name' => $name, 'email' => $email]);
+    }
+
+    public function delete($id){
+        $sql = "DELETE from users WHERE id= :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        }
+
+
+}
+
+?>
