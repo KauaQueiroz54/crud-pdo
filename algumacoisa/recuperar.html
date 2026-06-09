@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f4f7f6; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); width: 100%; max-width: 400px; padding: 40px 30px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #333; font-size: 24px; margin-bottom: 8px; }
+        .header p { color: #666; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 6px; color: #444; font-size: 14px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 12px 16px; border: 1px solid #ccc; border-radius: 8px; font-size: 14px; }
+        .btn-primary { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .btn-secondary { width: 100%; padding: 12px; background: #606770; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 12px; }
+        
+        .btn-primary:hover { background: #0056b3; }
+        .btn-secondary:hover { background: #4e545c; }
+        .btn-primary:active, .btn-secondary:active { transform: scale(0.98); }
+
+        /* Nova caixinha para a mensagem de sucesso na tela */
+        .msg-sucesso {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none; /* Começa escondida */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="requestFlow">
+            <div class="header">
+                <h1>Recuperar Senha</h1>
+                <p>Enviaremos um link para o seu e-mail</p>
+            </div>
+
+            <div id="mensagemSucesso" class="msg-sucesso"></div>
+
+            <form id="requestForm">
+                <div class="form-group">
+                    <label for="resetEmail">E-mail cadastrado</label>
+                    <input type="email" id="resetEmail" required>
+                </div>
+                <button type="submit" class="btn-primary">Enviar Link</button>
+                <button type="button" class="back-btn btn-secondary">Voltar ao Login</button>
+            </form>
+        </div>
+
+        <div id="updateFlow" style="display: none;">
+            <div class="header">
+                <h1>Nova Senha</h1>
+                <p>Digite sua nova senha abaixo</p>
+            </div>
+            <form id="updateForm">
+                <div class="form-group">
+                    <label for="newPassword">Nova Senha</label>
+                    <input type="password" id="newPassword" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <button type="submit" class="btn-primary">Atualizar Senha</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="recuperar.js"></script>
+</body>
+</html>
