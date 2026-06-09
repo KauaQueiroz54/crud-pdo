@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Nova Conta</title>
+    <style>
+        /* Mantendo o mesmo padrão visual da tela de login */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333333;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #444444;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background-color: #606770;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #4e545c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Criar Nova Conta</h1>
+            <p>Insira um e-mail e senha para se cadastrar</p>
+        </div>
+
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="regEmail">E-mail</label>
+                <input type="email" id="regEmail" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="regPassword">Senha</label>
+                <input type="password" id="regPassword" placeholder="Mínimo 6 caracteres" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Criar Conta</button>
+            
+            <button type="button" id="backToLogin" class="btn-secondary">
+                Já tem uma conta? Entrar
+            </button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Configuração do Supabase (Coloque as mesmas chaves aqui)
+        const SUPABASE_URL = "SUA_URL_DO_SUPABASE";
+        const SUPABASE_ANON_KEY = "SUA_CHAVE_ANON_DO_SUPABASE";
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Botão para voltar à tela de login manual
+        document.getElementById("backToLogin").addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
+
+        // Envio do formulário de cadastro
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("regEmail").value;
+            const password = document.getElementById("regPassword").value;
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                alert("Erro ao cadastrar: " + error.message);
+            } else {
+                alert("Cadastro realizado com sucesso! Verifique seu e-mail para confirmação.");
+                window.location.href = "index.html"; // Redireciona de volta para o Login
+            }
+        });
+    </script>
+</body>
+</html>
